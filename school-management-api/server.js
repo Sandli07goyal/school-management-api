@@ -1,19 +1,18 @@
 const express = require('express');
 const mysql = require('mysql2');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;  // use environment variable for port
 
 app.use(express.json()); // To parse JSON bodies
 
-// Create a MySQL connection
+// Use environment variables for database connection
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'yourpassword', // Replace with your actual MySQL password
-  database: 'school_management'
+  host: process.env.MYSQL_HOST,  // Use MYSQL_HOST from environment variable
+  user: process.env.MYSQL_USER,  // Use MYSQL_USER from environment variable
+  password: process.env.MYSQL_PASSWORD,  // Use MYSQL_PASSWORD from environment variable
+  database: process.env.MYSQL_DATABASE  // Use MYSQL_DATABASE from environment variable
 });
 
-// Connect to the database
 db.connect(err => {
   if (err) throw err;
   console.log('Connected to the database!');
